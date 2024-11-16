@@ -1,0 +1,19 @@
+# Node JS
+node_modules
+
+# Build files
+build/
+dist/
+
+# Environment files
+*.env
+
+# IDE files
+*.vscode
+
+# Logs
+logs/
+*.log
+
+# Other
+.DS_Store

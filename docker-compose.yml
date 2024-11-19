@@ -7,7 +7,7 @@ services:
     - NODE_ENV=development
     - POSTGRES_URI=TODO
   depends_on:
-    - postgres
+    - db
 
   client:
     build: ./client
@@ -18,14 +18,14 @@ services:
     depends_on:
       - server
 
-  postgres:
+  db:
     image: postgres:13
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_SUPER_USER}
+      - POSTGRES_PASSWORD=${DB_SUPER_USER_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - postgres_data:/data/postgres
 

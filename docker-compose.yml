@@ -2,7 +2,7 @@ version: 3.8
 services:
   build: ./server
   ports:
-    - "5000:5000"
+    - "${SERVER_PORT}:${SERVER_PORT}"
   environment:
     - NODE_ENV=development
     - POSTGRES_URI=TODO

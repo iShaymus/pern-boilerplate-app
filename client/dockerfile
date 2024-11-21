@@ -1,0 +1,47 @@
+# The foundation block is the same for all environments
+# it installs the dependencies and copies the source code into the image
+# it should not be used directly, but either called by the development or production block
+FROM node:22.11.0-alpine3.20 as foundation
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .
+
+
+# The development block is used for the development environment
+# it starts the development server with hot reloading enabled
+# without the need to build the application.
+# This is called by using the target flag in the docker run command
+# e.g docker run --target=development
+FROM foundation as development
+CMD ["npm", "run", "dev"]
+
+
+# The build block is used for the production or test environments
+# it builds the application and outputs the build to the dist folder
+# it should not be used directly, but called by the production or test block
+FROM foundation as build
+RUN npm run build
+
+
+#########################################################################################################
+#########################################################################################################
+## It is very important to run the tests in a production-like environment for Next.js applications
+## This is because not all Next.js components can be redered on the server side and function correctly
+## ensuring the components work in a production-like environment is crucial
+#########################################################################################################
+#########################################################################################################
+# The test block is used for the test environment
+# it starts the test server with the build output from the build block
+# this is called by using the target flag in the docker run command
+# e.g docker run --target=test
+FROM build as test
+CMD ["npm", "start"]
+
+
+# The production block is used for the production environment
+# it starts the production server with the build output from the build block
+# this is called by using the target flag in the docker run command
+# e.g docker run --target=production
+FROM build as production
+CMD ["npm", "start"]

@@ -1,7 +1,7 @@
 # The foundation block is the same for all environments
 # it installs the dependencies and copies the source code into the image
 # it should not be used directly, but either called by the development or production block
-FROM node:22.11.0 as foundation
+FROM node:22.11.0-alpine3.20 as foundation
 WORKDIR /app
 COPY ./package.json ./
 RUN npm install

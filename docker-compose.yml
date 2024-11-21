@@ -29,6 +29,11 @@ services:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     environment:
       - NODE_ENV=${NODE_ENV}
+      - CLIENT_PROTOCOL=${CLIENT_PROTOCOL}
+      - CLIENT_SUBDOMAIN=${CLIENT_SUBDOMAIN}
+      - CLEINT_DOMAIN=${CLEINT_DOMAIN}
+      - CLIENT_URL=${CLIENT_URL}
+      - SERVER_API_URL=${SERVER_API_URL}
     depends_on:
       - server
 
